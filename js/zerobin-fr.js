@@ -232,7 +232,7 @@ function displayMessages(key, comments) {
             }
             var divComment = $('<div class="comment" id="comment_' + comment.meta.commentid+'">'
                                + '<div class="commentmeta"><span class="nickname"></span><span class="commentdate"></span></div><div class="commentdata"></div>'
-                               + '<p class="text-right"><button onclick="open_reply($(this),\'' + comment.meta.commentid + '\');return false;" class="btn btn-default btn-xs">Répondre</button></p>'
+                               + '<button onclick="open_reply($(this),\'' + comment.meta.commentid + '\');return false;">Répondre</button>'
                                + '</div>');
             setElementText(divComment.find('div.commentdata'), cleartext);
             // Convert URLs to clickable links in comment.
@@ -243,7 +243,7 @@ function displayMessages(key, comments) {
             try {
                 divComment.find('span.nickname').text(zeroDecipher(key, comment.meta.nickname));
             } catch(err) { }
-            divComment.find('span.commentdate').text((new Date(comment.meta.postdate*1000).toLocaleString())).attr('title','N° de commentaire : ' + comment.meta.commentid);
+            divComment.find('span.commentdate').text('  ('+(new Date(comment.meta.postdate*1000).toString())+')').attr('title','CommentID: ' + comment.meta.commentid);
 
             // If an avatar is available, display it.
             if (comment.meta.vizhash) {
@@ -252,7 +252,7 @@ function displayMessages(key, comments) {
 
             place.append(divComment);
         }
-        $('div#comments').append('<div class="comment add-comment"><p><button onclick="open_reply($(this),\'' + pasteID() + '\');return false;" class="btn btn-default btn-sm">Ajouter un commentaire</button></p></div>');
+        $('div#comments').append('<div class="comment"><button onclick="open_reply($(this),\'' + pasteID() + '\');return false;">Ajouter un comentaire</button></div>');
         $('div#discussion').show();
     }
 }
@@ -265,9 +265,9 @@ function displayMessages(key, comments) {
 function open_reply(source, commentid) {
     $('div.reply').remove(); // Remove any other reply area.
     source.after('<div class="reply">'
-                + '<div class="form-group"><label for="nickname">Pseudo (facultatif)</label><input type="text" id="nickname" class="form-control " value="" /></div>'
-                + '<div class="form-group"><label for="replymessage">Commentaire</label><textarea id="replymessage" class="replymessage form-control" rows="7"></textarea></div>'
-                + '<p><button id="replybutton" onclick="send_comment(\'' + commentid + '\');return false;" class="btn btn-primary btn-sm">Publier le commentaire</button></p>'
+                + '<input type="text" id="nickname" title="Pseudo facultatif…" value="Pseudo facultatif…" />'
+                + '<textarea id="replymessage" class="replymessage" cols="80" rows="7"></textarea>'
+                + '<br><button id="replybutton" onclick="send_comment(\'' + commentid + '\');return false;">Publier le commentaire</button>'
                 + '<div id="replystatus">&nbsp;</div>'
                 + '</div>');
     $('input#nickname').focus(function() {
@@ -358,11 +358,11 @@ function send_data() {
                 var url = scriptLocation() + "?" + data.id + '#' + randomkey;
                 var deleteUrl = scriptLocation() + "?pasteid=" + data.id + '&deletetoken=' + data.deletetoken;
                 showStatus('');
-                $('div#pastelink').html('<div class="form-group"><label for="public-link"><i class="fa fa-fw fa-eye"></i> <a id="pasteurl" href="' + url + '"> Lien de partage</a></label><input class="form-control" id="public-link" readonly="readonly" value="' + url + '" type="text"></div>');
-                $('div#deletelink').html('<div class="form-group"><label for="delete-link"><i class="fa fa-fw fa-trash-o"></i> <a href="' + deleteUrl + '">Lien de suppression</a></label><input class="form-control" id="delete-link" readonly="readonly" value="' + deleteUrl + '" type="text"></div>');
+
+                $('div#pastelink').html('Votre texte se trouve à cette adresse <a id="pasteurl" href="' + url + '">' + url + '</a> <span id="copyhint">(Tapez CTRL+C pour copier le lien)</span>');
+                $('div#deletelink').html('<a href="' + deleteUrl + '">Lien de suppression</a>');
                 $('div#pasteresult').show();
-                $("#public-link").select();
-                //selectText('#public-link'); // We pre-select the link so that the user only has to CTRL+C the link.
+                selectText('pasteurl'); // We pre-select the link so that the user only has to CTRL+C the link.
 
                 setElementText($('div#cleartext'), $('textarea#message').val());
                 urls2links($('div#cleartext'));
@@ -486,8 +486,8 @@ function newPaste() {
  * (We use the same function for paste and reply to comments)
  */
 function showError(message) {
-    $('div#status').addClass('alert alert-danger').text(message);
-    $('div#replystatus').addClass('errorMessage').html('<p class="alert alert-danger">'+message+'</p>');
+    $('div#status').addClass('errorMessage').text(message);
+    $('div#replystatus').addClass('errorMessage').text(message);
 }
 
 /**

@@ -1,9 +1,8 @@
 <html lang="fr">
 <head>
-<title>Framabin - Transmettez des messages chiffrés</title>
+<title>ZeroBin</title>
 <meta name="robots" content="noindex" />
-<!--<link type="text/css" rel="stylesheet" href="css/zerobin.css?{$VERSION|rawurlencode}#" /> -->
-<link type="text/css" rel="stylesheet" href="css/framabin.css?{$VERSION|rawurlencode}#" />
+<link type="text/css" rel="stylesheet" href="css/zerobin.css?{$VERSION|rawurlencode}#" /> 
 <script src="js/jquery.js?{$VERSION|rawurlencode}#"></script>
 <script src="js/sjcl.js?{$VERSION|rawurlencode}#"></script>
 <script src="js/base64.js?{$VERSION|rawurlencode}#"></script>
@@ -23,124 +22,67 @@
 
 </head>
   <body>
-      <script src="../nav/nav.js" type="text/javascript"></script>
-      <div class="container ombre">
-            <header role="banner">
-                <h1 onclick="window.location.href=scriptLocation();return false;"><span class="frama">Frama</span><span class="services">bin</span></h1>
-                <p class="lead">Transmettez des messages chiffrés</p>
-                <hr class="trait" role="presentation" />
-            </header>
-
-            <main>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Document</h2>
-<!-- Zerobin -->
-<noscript><div class="nonworking alert alert-danger"><p>Framabin requiert l’activation du Javascript pour fonctionner.<br>Désolé pour le désagrément.</p></div></noscript>
-<div id="oldienotice" class="nonworking alert alert-danger"><p>Un navigateur web moderne est requis pour utiliser Framabin.</p></div>
-    <div id="ienotice"><p>Vous utilisez encore Internet Explorer ? Rendez-vous service, basculez sur un navigateur web moderne : <a href="http://www.mozilla.org/firefox/">Firefox</a>, Opera, Chrome, Safari…</p></div>
+      <div id="aboutbox">
+          ZeroBin est un service en ligne libre et minimaliste qui permet à n’importe qui de partager des textes de manière confidentielle et sécurisée.
+          Les données sont chiffrées/déchiffrées <i>dans le navigateur</i> en utilisant l’algorithme AES 256 bits. 
+          Plus d’informations sur le <a href="http://sebsauvage.net/wiki/doku.php?id=php:zerobin">site du projet</a>.<br />
+          <span style="text-decoration:blink;font-size:10pt;color:#a4b3c4;">&#9654;</span> Note: Ceci est un service de test : 
+          Les données peuvent être supprimées à tout moment. Des chatons mourront si vous abusez de ce service.
+</div>
+    <h1 title="ZeroBin" onclick="window.location.href=scriptLocation();return false;">ZeroBin</h1><br>
+    <h2 lang="en">Because ignorance is bliss</h2><br>
+    <h3>{$VERSION}</h3>
+    <noscript><div class="nonworking">Zerobin requiert l’activation du Javascript pour fonctionner.<br>Désolé pour le désagrément.</div></noscript>
+    <div id="oldienotice" class="nonworking">Un navigateur web moderne est requis pour utiliser ZeroBin.</div>
+    <div id="ienotice">Vous utilisez encore Internet Explorer ? &nbsp;Rendez-vous service, basculez sur un navigateur web moderne : 
+        <a href="http://www.mozilla.org/firefox/">Firefox</a>, 
+        <a href="http://www.opera.com/">Opera</a>, 
+        <a href="http://www.google.com/chrome">Chrome</a>, 
+        <a href="http://www.apple.com/safari">Safari</a>…
+    </div>
     <div id="status">{$STATUS}</div>
-    <div id="errormessage" style="display:none" class="alert alert-danger">{$ERRORMESSAGE|htmlspecialchars}</div>
-    <div id="toolbar" class="form-inline">
-        <button id="newbutton" onclick="window.location.href=scriptLocation();return false;" style="display:none;" class="btn btn-info"><i class="fa fa-fw fa-file"></i> Nouveau</button>
-        <button id="sendbutton" onclick="send_data();return false;" style="display:none;" class="btn btn-primary"><i class="fa fa-fw fa-send"></i> Envoyer</button>
-        <button id="clonebutton" onclick="clonePaste();return false;" style="display:none;" class="btn btn-default"><i class="fa fa-fw fa-copy"></i> Dupliquer</button>
-        <button id="rawtextbutton" onclick="rawText();return false;" style="display:none;"  class="btn btn-default"><i class="fa fa-fw fa-file-text-o"></i> Texte brute</button>
-
-        <div id="expiration" style="display:none;" class="btn btn-default"><label for="pasteExpiration">Expiration</label>
-            <select id="pasteExpiration" name="pasteExpiration">
-                <option value="5min">5 minutes</option>
-                <option value="10min">10 minutes</option>
-                <option value="1hour">1 heure</option>
-                <option value="1day">1 jour</option>
-                <option value="1week">1 semaine</option>
-                <option value="1month" selected="selected">1 mois</option>
-                <option value="1year">1 an</option>
-                <option value="never">Jamais</option>
-            </select>
-        </div>
-        <div id="burnafterreadingoption" style="display:none;" class="btn btn-default">
-            <input type="checkbox" id="burnafterreading" name="burnafterreading" />
-            <label for="burnafterreading">Détruire après lecture</label>
-        </div>
-    
-        <div id="opendisc" style="display:none;" class="btn btn-default">
-            <input type="checkbox" id="opendiscussion" name="opendiscussion" />
-            <label for="opendiscussion">Commentaires</label>
-        </div>
-        <div id="syntaxcoloringoption" style="display:none;" class="btn btn-default">
-            <input type="checkbox" id="syntaxcoloring" name="syntaxcoloring" />
-            <label for="syntaxcoloring">Coloration syntaxique</label>
-        </div>
+    <div id="errormessage" style="display:none">{$ERRORMESSAGE|htmlspecialchars}</div>
+    <div id="toolbar">
+    <button id="newbutton" onclick="window.location.href=scriptLocation();return false;" style="display:none;"><img src="img/icon_new.png#" width="11" height="15" />Nouveau</button>
+    <button id="sendbutton" onclick="send_data();return false;" style="display:none;"><img src="img/icon_send.png#" width="18" height="15" />Envoyer</button>
+    <button id="clonebutton" onclick="clonePaste();return false;" style="display:none;"><img src="img/icon_clone.png#" width="15" height="17" />Cloner</button>
+    <button id="rawtextbutton" onclick="rawText();return false;" style="display:none; "><img src="img/icon_raw.png#" width="15" height="15" style="padding:1px 0px 1px 0px;"/>Texte brut</button>
+      <div id="expiration" style="display:none;">Expiration : 
+      <select id="pasteExpiration" name="pasteExpiration">
+        <option value="5min">5 minutes</option>
+        <option value="10min">10 minutes</option>
+        <option value="1hour">1 heure</option>
+        <option value="1day">1 jour</option>
+        <option value="1week">1 semaine</option>
+        <option value="1month" selected="selected">1 mois</option>
+        <option value="1year">1 an</option>
+        <option value="never">Jamais</option>
+      </select>
+      </div>
+      <div id="remainingtime" style="display:none;"></div>
+      <div id="burnafterreadingoption" class="button" style="display:none;">
+         <input type="checkbox" id="burnafterreading" name="burnafterreading" />
+         <label for="burnafterreading">Bruler après lecture</label>
+      </div>
+      <div id="opendisc" class="button" style="display:none;">
+         <input type="checkbox" id="opendiscussion" name="opendiscussion" />
+         <label for="opendiscussion">Ouvrir une discussion</label>
+      </div>
+      <div id="syntaxcoloringoption" class="button" style="display:none;">
+         <input type="checkbox" id="syntaxcoloring" name="syntaxcoloring" />
+         <label for="syntaxcoloring">Coloration syntaxique</label>
+      </div>
     </div>
-
-    <br />
-    
-    <div id="remainingtime" style="display:none;" class="alert alert-info"></div>
-        
-    <div id="pasteresult" style="display:none;" class="alert alert-success">
-        <div id="pastelink"></div>
-        <div id="deletelink"></div>
+    <div id="pasteresult" style="display:none;">
+      <div id="deletelink"></div>
+      <div id="pastelink"></div>
     </div>
-    
-    <div id="cleartext" class="well" style="display:none;"></div>
-    
-    <label for="message" class="sr-only">Texte à transmettre</label>
-    <textarea id="message" name="message" rows="25" class="form-control" style="display:none;" placeholder="Collez votre texte ici…"></textarea>
-    
+    <div id="cleartext" style="display:none;"></div>
+    <textarea id="message" name="message" cols="80" rows="25" style="display:none;"></textarea>
     <div id="discussion" style="display:none;">
-        <h2>Commentaires</h2>
+        <h4>Discussion</h4>
         <div id="comments"></div>
     </div>
-    
     <div id="cipherdata" style="display:none;">{$CIPHERDATA}</div>
-<!-- / Zerobin -->
-    
-                    </div>
-                </div>
-                <hr role="presentation" />
-                <div class="row">
-                    <div class="col-md-4" id="tuto-faq">
-                        <h2>Prise en main</h2>
-                        <p class="text-center" role="presentation"><span class="glyphicon glyphicon-question-sign"></span></p>
-                        <div id="aboutbox">
-                            <p>Framabin est un service en ligne libre et minimaliste qui permet de partager des textes de manière confidentielle et sécurisée.</p>
-                            <ol>
-                                <li>Collez le texte à transmettre.</li>
-                                <li>Si besoin, définissez sa durée de conservation en ligne, ajoutez un espace de discussion ou activez la coloration du code.</li>
-                                <li>Partagez ensuite avec vos correspondants le lien qui vous est donné.</li>
-                            </ol>
-                            <p>Vos données (commentaires inclus) sont <b>chiffrées dans le navigateur web</b> en utilisant <a href="http://fr.wikipedia.org/wiki/Advanced_Encryption_Standard">l’algorithme <attr title="Advanced Encryption Standard">AES</attr> 256 bits</a>.<br />
-                            Elles sont ensuite transmises et stockées sur nos serveurs sans qu’il nous soit possible de les déchiffrer.
-                            <b>Vous seuls possedez la clé</b> utilisée pour chiffrer et déchiffrer les données.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4" id="le-logiciel">
-                        <h2>Le logiciel</h2>
-                        <p class="text-center" role="presentation"><span class="glyphicon glyphicon-cloud"></span></p>
-                        <p>Framabin repose sur le logiciel <a href="http://sebsauvage.net/wiki/doku.php?id=php:zerobin">ZeroBin</a> développé par Sébastien Sauvage.</p>
-                        <p>ZeroBin et ses composants sont <a href="https://github.com/sebsauvage/ZeroBin/blob/master/README.md">sous licence libre</a>.</p>
-                        <p>Framabin requiert l’activation du Javascript pour fonctionner ainsi qu'un navigateur web récent :</p>
-                        <ul>
-                            <li><a href="http://www.mozilla.org/firefox/">Firefox</a>,</li>
-                            <li>Opera,</li>
-                            <li>Chrome,</li>
-                            <li>Safari…</li>
-                        </ul>
-                        <p>L’utilisation d’Internet Explorer n’est pas recommandée.</p>
-                    </div>
-
-                    <div class="col-md-4" id="jardin">
-                        <h2>Cultivez votre jardin</h2>
-                        <p class="text-center" role="presentation"><span class="glyphicon glyphicon-tree-deciduous"></span></p>
-                        <p>Pour participer au développement du logiciel, proposer des améliorations
-                            ou simplement le télécharger, rendez-vous sur <a href="https://github.com/sebsauvage/ZeroBin">le site de développement</a>.</p>
-                        <p>Si vous souhaitez installer ce logiciel pour votre propre usage et ainsi gagner en autonomie, nous vous aidons sur :</p>
-                        <p class="text-center"><a href="http://framacloud.org/cultiver-son-jardin/installation-de-zerobin/" class="btn btn-primary">framacloud.org</a></p>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </body>
+  </body>
 </html>
