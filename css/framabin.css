@@ -1,0 +1,140 @@
+body {
+    background:#eee;
+}
+h1 {
+    font-family: "DejaVu Sans",Verdana,Geneva,sans-serif !important;
+    font-size: 48px;
+    font-weight: bold;
+}
+.lead {
+    font-style:italic;
+}
+.container.ombre {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 20px 30px;
+}
+
+img.ombre {
+    width:85%; 
+    margin:20px;
+}
+
+#tuto-faq p[role="presentation"] .glyphicon,
+#le-logiciel p[role="presentation"] .glyphicon,
+#jardin p[role="presentation"] .glyphicon {
+    font-size:50px;
+}
+
+div#ienotice {
+    display:none;
+}
+
+div#oldienotice {
+    display:none;
+}
+
+#cleartext {
+    white-space: pre-wrap;
+}
+
+/* --- discussion related CSS ------- */
+
+
+/*div#discussion {   Discussion container 
+margin-top:20px;
+width:100%;
+margin-left:-30px;
+min-width:200px;
+}*/
+
+h4 {
+font-size:1.2em;
+color: #94A3B4;
+font-style:italic;
+font-weight:bold; 
+position:relative;
+margin-left:30px;
+}
+
+
+div.comment /* One single reply */
+{
+  padding: 0px 0px 0px 10px;
+  margin: 0 0 10px;
+  border-left: 5px solid #eee;
+
+}
+/* FIXME: Add min-width */
+
+div.reply {
+    text-align:left;
+}
+
+div#replystatus { 
+display:inline;
+padding:1px 7px; 
+}
+
+div.comment input  {
+padding:2px;
+}
+
+textarea#replymessage {
+margin-top:5px;
+}
+
+div.commentmeta {
+    background-color:#eee;
+    margin-bottom:5px;
+    padding:5px 5px 5px 10px;
+    margin-left:-10px;
+    font-weight:bold;
+}
+
+div.commentdata {
+    padding-left:20px;
+    padding-right:10px;
+}
+
+div.add-comment {
+    border-left:none;
+    border-top: 2px solid #eee;
+}
+
+div.add-comment .btn-default {
+    margin: 20px 0 10px 0;
+}
+
+span.commentdate {
+    color: #616161;
+    font-weight:normal;
+    float:right;
+}
+
+img.vizhash {
+    width:16px;
+    height:16px;
+    position:relative;
+}
+
+#expiration label,
+#burnafterreadingoption label,
+#opendisc label,
+#syntaxcoloringoption label {
+    font-weight:normal;
+}
+#expiration,
+#burnafterreadingoption,
+#opendisc,
+#syntaxcoloringoption {
+    height:34px;
+}
+#expiration select {
+    margin-top:-2px;
+}
+#burnafterreadingoption input,
+#opendisc input,
+#syntaxcoloringoption input {
+    margin-top:0;
+}
